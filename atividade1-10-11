@@ -1,0 +1,52 @@
+class Agente:
+    def __init__(self):
+        self.posicao = 'A' #posição inicial
+        self.objetivo = 'A' #começa e termina na posição A 
+        self.caminho_saida = []
+
+    def acao(self, ambiente):
+        if self.posicao == self.objetivo:
+            if ambiente[self.posicao] == 'Sujo':
+                ambiente[self.posicao] = 'Limpo'
+                return 'Aspirar'
+            elif self.caminho_saida:
+                acao = self.caminho_saida.pop() 
+                return acao
+        else:
+            acao = self.navegar()
+            if acao == 'Mover para a direita':
+                self.caminho_saida.append('Mover para a esquerda') 
+    def navegar(self):
+        if self.posicao != 'A':
+        return 'Mover para a esquerda'
+        
+    def verificar_objetivo(self):
+        return self.posicao == self.objetivo
+
+ambiente = {
+    'A': 'Limpo',
+    'B': 'Limpo',
+    'C': 'Sujo',
+    'D': 'Limpo',
+    'E': 'Limpo',
+    'F': 'Sujo',
+    'G': 'Limpo',
+    'H': 'Sujo',
+    'I': 'Sujo',
+    'J': 'Limpo',
+    'K': 'Sujo',
+    'L': 'Limpo',
+    'M': 'Sujo',
+    'N': 'Limpo',
+    'O': 'Sujo',
+    'P': 'Limpo'
+}
+
+agente = Agente()
+
+while not agente.verificar_objetivo():
+    acao = agente.acao(ambiente)
+    if acao == 'Mover para a esquerda':
+        agente.posicao = chr(ord(agente.posicao) - 1)
+
+print("O objetivo foi alcançado!")
